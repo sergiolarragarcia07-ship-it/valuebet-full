@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ValueBet — ¡Bienvenido a Premium!</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+<nav class="navbar"><a href="/" class="nav-logo">ValueBet</a></nav>
+<div class="auth-container" style="text-align:center">
+  <div class="auth-card">
+    <div style="font-size:3rem;margin-bottom:16px">🎉</div>
+    <div class="auth-title">¡Ya eres Premium!</div>
+    <div class="auth-sub" style="margin-bottom:24px">Tu suscripción está activa. Ya puedes usar el análisis con IA.</div>
+    <a href="/pages/dashboard.html" class="btn-full" style="display:block;text-align:center;text-decoration:none;padding:13px;background:linear-gradient(135deg,var(--yellow),#f0a020);border-radius:10px;color:#000;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px">IR AL DASHBOARD →</a>
+  </div>
+</div>
+</body>
+</html>

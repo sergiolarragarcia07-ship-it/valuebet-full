@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ValueBet — Dashboard Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+<nav class="navbar">
+  <a href="/" class="nav-logo">ValueBet</a>
+  <div class="nav-links">
+    <a href="#" onclick="manageSubscription()" style="font-size:0.8rem;color:var(--muted);text-decoration:none">Gestionar suscripción</a>
+    <a href="#" class="btn-nav" onclick="logout()">Cerrar sesión</a>
+  </div>
+</nav>
+
+<div class="dashboard-container">
+  <div class="premium-badge">★ Premium activo</div>
+
+  <div class="card">
+    <div class="card-title"><div class="icon">⚽</div> DATOS DE LA APUESTA</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Equipo Local</label>
+        <input type="text" id="team1" placeholder="Ej: Real Madrid" />
+      </div>
+      <div class="form-group">
+        <label>Equipo Visitante</label>
+        <input type="text" id="team2" placeholder="Ej: Atlético Madrid" />
+      </div>
+      <div class="form-group full">
+        <label>Mercado</label>
+        <div class="market-selector">
+          <div class="market-display" onclick="togglePanel()">
+            <div class="market-display-label">
+              <span id="selLabel">Ambos Marcan (Sí/No)</span>
+              <span class="mcat-pill" id="selCat">Goles</span>
+            </div>
+            <span class="market-arrow" id="mArrow">▼</span>
+          </div>
+          <div class="market-panel" id="mPanel">
+            <div class="msearch"><input type="text" placeholder="🔍  Buscar..." oninput="filterM(this.value)" /></div>
+            <div class="mcat"><div class="mcat-hdr" onclick="toggleCat(this)"><span class="mcat-icon">🏆</span><span class="mcat-name">Resultado</span><span class="mcat-toggle open">▼</span></div>
+            <div class="mitems open">
+              <div class="mitem" data-m="home_win" data-cat="Resultado">Victoria Local (1)</div>
+              <div class="mitem" data-m="draw" data-cat="Resultado">Empate (X)</div>
+              <div class="mitem" data-m="away_win" data-cat="Resultado">Victoria Visitante (2)</div>
+              <div class="mitem" data-m="dc_1x" data-cat="Resultado">Doble oportunidad 1X</div>
+              <div class="mitem" data-m="dc_x2" data-cat="Resultado">Doble oportunidad X2</div>
+              <div class="mitem" data-m="dc_12" data-cat="Resultado">Doble oportunidad 12</div>
+              <div class="mitem" data-m="dnb_home" data-cat="Resultado">Empate No Cuenta – Local</div>
+              <div class="mitem" data-m="dnb_away" data-cat="Resultado">Empate No Cuenta – Visitante</div>
+            </div></div>
+            <div class="mcat"><div class="mcat-hdr" onclick="toggleCat(this)"><span class="mcat-icon">⚽</span><span class="mcat-name">Goles</span><span class="mcat-toggle open">▼</span></div>
+            <div class="mitems open">
+              <div class="mitem active" data-m="btts" data-cat="Goles">Ambos Marcan (Sí/No)</div>
+              <div class="mitem" data-m="over05" data-cat="Goles">Más de 0.5 goles</div>
+              <div class="mitem" data-m="over15" data-cat="Goles">Más de 1.5 goles</div>
+              <div class="mitem" data-m="over25" data-cat="Goles">Más de 2.5 goles</div>
+              <div class="mitem" data-m="under25" data-cat="Goles">Menos de 2.5 goles</div>
+              <div class="mitem" data-m="over35" data-cat="Goles">Más de 3.5 goles</div>
+              <div class="mitem" data-m="under35" data-cat="Goles">Menos de 3.5 goles</div>
+              <div class="mitem" data-m="over45" data-cat="Goles">Más de 4.5 goles</div>
+              <div class="mitem" data-m="over55" data-cat="Goles">Más de 5.5 goles</div>
+              <div class="mitem" data-m="home_o15" data-cat="Goles">Local marca +1.5</div>
+              <div class="mitem" data-m="home_o25" data-cat="Goles">Local marca +2.5</div>
+              <div class="mitem" data-m="away_o15" data-cat="Goles">Visitante marca +1.5</div>
+              <div class="mitem" data-m="away_o25" data-cat="Goles">Visitante marca +2.5</div>
+            </div></div>
+            <div class="mcat"><div class="mcat-hdr" onclick="toggleCat(this)"><span class="mcat-icon">🕐</span><span class="mcat-name">Primer Tiempo</span><span class="mcat-toggle">▼</span></div>
+            <div class="mitems">
+              <div class="mitem" data-m="ht_home" data-cat="1T">1T – Victoria Local</div>
+              <div class="mitem" data-m="ht_draw" data-cat="1T">1T – Empate</div>
+              <div class="mitem" data-m="ht_away" data-cat="1T">1T – Victoria Visitante</div>
+              <div class="mitem" data-m="ht_over05" data-cat="1T">1T – Más de 0.5 goles</div>
+              <div class="mitem" data-m="ht_over15" data-cat="1T">1T – Más de 1.5 goles</div>
+              <div class="mitem" data-m="ht_btts" data-cat="1T">1T – Ambos marcan</div>
+            </div></div>
+            <div class="mcat"><div class="mcat-hdr" onclick="toggleCat(this)"><span class="mcat-icon">🎯</span><span class="mcat-name">Marcador Exacto</span><span class="mcat-toggle">▼</span></div>
+            <div class="mitems">
+              <div class="mitem" data-m="sc00" data-cat="Marcador">0-0</div>
+              <div class="mitem" data-m="sc10" data-cat="Marcador">1-0 / 0-1</div>
+              <div class="mitem" data-m="sc11" data-cat="Marcador">1-1</div>
+              <div class="mitem" data-m="sc20" data-cat="Marcador">2-0 / 0-2</div>
+              <div class="mitem" data-m="sc21" data-cat="Marcador">2-1 / 1-2</div>
+              <div class="mitem" data-m="sc22" data-cat="Marcador">2-2</div>
+              <div class="mitem" data-m="sc30" data-cat="Marcador">3-0 / 0-3</div>
+            </div></div>
+            <div class="mcat"><div class="mcat-hdr" onclick="toggleCat(this)"><span class="mcat-icon">📐</span><span class="mcat-name">Córners</span><span class="mcat-toggle">▼</span></div>
+            <div class="mitems">
+              <div class="mitem" data-m="cor_o75" data-cat="Córners">Córners +7.5</div>
+              <div class="mitem" data-m="cor_o85" data-cat="Córners">Córners +8.5</div>
+              <div class="mitem" data-m="cor_o95" data-cat="Córners">Córners +9.5</div>
+              <div class="mitem" data-m="cor_u75" data-cat="Córners">Córners -7.5</div>
+            </div></div>
+            <div class="mcat"><div class="mcat-hdr" onclick="toggleCat(this)"><span class="mcat-icon">💥</span><span class="mcat-name">Disparos a Puerta</span><span class="mcat-toggle">▼</span></div>
+            <div class="mitems">
+              <div class="mitem" data-m="sot_o35" data-cat="Disparos">Total tiros +3.5</div>
+              <div class="mitem" data-m="sot_o55" data-cat="Disparos">Total tiros +5.5</div>
+              <div class="mitem" data-m="h_sot_o25" data-cat="Disparos">Local tiros +2.5</div>
+              <div class="mitem" data-m="a_sot_o25" data-cat="Disparos">Visitante tiros +2.5</div>
+            </div></div>
+            <div class="mcat"><div class="mcat-hdr" onclick="toggleCat(this)"><span class="mcat-icon">🟨</span><span class="mcat-name">Tarjetas</span><span class="mcat-toggle">▼</span></div>
+            <div class="mitems">
+              <div class="mitem" data-m="cards_o15" data-cat="Tarjetas">Tarjetas +1.5</div>
+              <div class="mitem" data-m="cards_o25" data-cat="Tarjetas">Tarjetas +2.5</div>
+              <div class="mitem" data-m="cards_o35" data-cat="Tarjetas">Tarjetas +3.5</div>
+              <div class="mitem" data-m="red_yes" data-cat="Tarjetas">Tarjeta roja – Sí</div>
+            </div></div>
+            <div class="mcat"><div class="mcat-hdr" onclick="toggleCat(this)"><span class="mcat-icon">🚫</span><span class="mcat-name">Faltas</span><span class="mcat-toggle">▼</span></div>
+            <div class="mitems">
+              <div class="mitem" data-m="fouls_o155" data-cat="Faltas">Faltas +15.5</div>
+              <div class="mitem" data-m="fouls_o185" data-cat="Faltas">Faltas +18.5</div>
+              <div class="mitem" data-m="fouls_u155" data-cat="Faltas">Faltas -15.5</div>
+            </div></div>
+            <div class="mcat"><div class="mcat-hdr" onclick="toggleCat(this)"><span class="mcat-icon">👤</span><span class="mcat-name">Goleadores</span><span class="mcat-toggle">▼</span></div>
+            <div class="mitems">
+              <div class="mitem" data-m="anytime_home" data-cat="Goleadores" data-player="true">Jugador local – marca</div>
+              <div class="mitem" data-m="anytime_away" data-cat="Goleadores" data-player="true">Jugador visitante – marca</div>
+              <div class="mitem" data-m="first_home" data-cat="Goleadores" data-player="true">Jugador local – primer gol</div>
+              <div class="mitem" data-m="first_away" data-cat="Goleadores" data-player="true">Jugador visitante – primer gol</div>
+              <div class="mitem" data-m="brace" data-cat="Goleadores" data-player="true">Jugador – doblete</div>
+              <div class="mitem" data-m="hattrick" data-cat="Goleadores" data-player="true">Jugador – hat-trick</div>
+            </div></div>
+            <div class="mcat"><div class="mcat-hdr" onclick="toggleCat(this)"><span class="mcat-icon">🔫</span><span class="mcat-name">Disparos Jugador</span><span class="mcat-toggle">▼</span></div>
+            <div class="mitems">
+              <div class="mitem" data-m="p_sot1" data-cat="Disparos" data-player="true">Jugador – 1+ remate a puerta</div>
+              <div class="mitem" data-m="p_sot2" data-cat="Disparos" data-player="true">Jugador – 2+ remates a puerta</div>
+              <div class="mitem" data-m="p_shots2" data-cat="Disparos" data-player="true">Jugador – 2+ disparos</div>
+            </div></div>
+            <div class="mcat"><div class="mcat-hdr" onclick="toggleCat(this)"><span class="mcat-icon">🎁</span><span class="mcat-name">Asistencias</span><span class="mcat-toggle">▼</span></div>
+            <div class="mitems">
+              <div class="mitem" data-m="p_assist" data-cat="Asistencias" data-player="true">Jugador – asistencia</div>
+              <div class="mitem" data-m="p_ga" data-cat="Asistencias" data-player="true">Jugador – gol + asistencia</div>
+            </div></div>
+            <div class="mcat"><div class="mcat-hdr" onclick="toggleCat(this)"><span class="mcat-icon">⚡</span><span class="mcat-name">Especiales</span><span class="mcat-toggle">▼</span></div>
+            <div class="mitems">
+              <div class="mitem" data-m="cs_home" data-cat="Especiales">Portería a cero – Local</div>
+              <div class="mitem" data-m="cs_away" data-cat="Especiales">Portería a cero – Visitante</div>
+              <div class="mitem" data-m="wtn_home" data-cat="Especiales">Local gana sin encajar</div>
+              <div class="mitem" data-m="pen_scored" data-cat="Especiales">Se marca penalti</div>
+              <div class="mitem" data-m="goal_both_halves" data-cat="Especiales">Gol en ambas partes</div>
+              <div class="mitem" data-m="comeback_home" data-cat="Especiales">Local remonta</div>
+              <div class="mitem" data-m="var" data-cat="Especiales">Interviene el VAR</div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group full" id="playerWrap" style="display:none">
+        <label>Nombre del jugador</label>
+        <input type="text" id="playerName" placeholder="Ej: Endrick" />
+      </div>
+    </div>
+  </div>
+
+  <div class="card blue-top">
+    <div class="card-title blue"><div class="icon">📊</div> CUOTA</div>
+    <div class="cuota-grid">
+      <div class="form-group">
+        <label>Cuota de la casa</label>
+        <input type="number" class="big-input" id="cuota" placeholder="2.10" step="0.01" min="1.01" oninput="onCuota()" />
+        <div class="input-hint">Cuota europea decimal</div>
+      </div>
+      <div class="derived">
+        <div class="derived-label">Prob. implícita</div>
+        <div class="derived-value" id="impliedVal">—</div>
+        <div class="derived-sub">según la casa</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-ai" style="width:100%;margin-bottom:4px" id="btnAnalyze" onclick="analyzeAI()">
+    <span class="ai-badge">★ IA</span>
+    ANALIZAR CON INTELIGENCIA ARTIFICIAL
+  </button>
+  <div class="error" id="errorMsg"></div>
+
+  <div id="results" style="display:none;margin-top:18px">
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-label">Prob. implícita</div><div class="stat-value c-yellow" id="rI">—</div><div class="stat-sub">casa</div></div>
+      <div class="stat-box"><div class="stat-label">Prob. real (IA)</div><div class="stat-value c-blue" id="rR">—</div><div class="stat-sub">calculada con datos</div></div>
+      <div class="stat-box"><div class="stat-label">Valor esperado</div><div class="stat-value" id="rEV">—</div><div class="stat-sub">por €100</div></div>
+    </div>
+
+    <div class="verdict" id="verdict">
+      <div class="verdict-icon" id="vIcon"></div>
+      <div class="verdict-text"><h3 id="vTitle"></h3><p id="vDesc"></p></div>
+    </div>
+
+    <div class="ai-box" id="aiBox" style="display:none">
+      <div class="ai-box-hdr">
+        <div class="ai-box-title">ANÁLISIS DE IA</div>
+        <span class="ai-pill">Claude AI</span>
+      </div>
+      <div id="aiContent"><div class="ai-loading"><div class="spin"></div> Analizando...</div></div>
+    </div>
+
+    <div class="breakdown">
+      <div class="breakdown-title">DESGLOSE</div>
+      <div class="brow"><span class="brow-label">Partido</span><span class="brow-value" id="bPartido" style="color:var(--text)">—</span></div>
+      <div class="brow"><span class="brow-label">Mercado</span><span class="brow-value" id="bMercado" style="color:var(--text);max-width:55%;text-align:right;white-space:normal">—</span></div>
+      <div class="brow"><span class="brow-label">Cuota</span><span class="brow-value" id="bCuota">—</span></div>
+      <div class="brow"><span class="brow-label">Prob. implícita</span><span class="brow-value" id="bImplied">—</span></div>
+      <div class="brow"><span class="brow-label">Prob. real (IA)</span><span class="brow-value" id="bReal">—</span></div>
+      <div class="brow"><span class="brow-label">Edge</span><span class="brow-value" id="bEdge">—</span></div>
+      <div class="brow"><span class="brow-label">EV por €100</span><span class="brow-value" id="bEV">—</span></div>
+      <div class="edge-wrap">
+        <div class="edge-labels"><span>← Casa gana</span><span>Neutro</span><span>Tú ganas →</span></div>
+        <div class="edge-track"><div class="edge-center"></div><div class="edge-fill" id="edgeBar"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/auth.js"></script>
+<script src="/js/calculator.js"></script>
+<script>
+  if (!getToken()) window.location.href = '/pages/login.html';
+
+  async function analyzeAI() {
+    hideErr();
+    const d = validate(); if (!d) return;
+    const btn = document.getElementById('btnAnalyze');
+    btn.disabled = true; btn.textContent = 'ANALIZANDO...';
+    document.getElementById('aiBox').style.display = 'block';
+    document.getElementById('results').style.display = 'block';
+    document.getElementById('aiContent').innerHTML = '<div class="ai-loading"><div class="spin"></div> La IA está analizando el partido y buscando datos reales...</div>';
+    document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+
+    try {
+      const res = await apiCall('/api/analyze', 'POST', {
+        team1: d.team1, team2: d.team2,
+        market: selBaseLabel, cuota: d.cuota, player: d.player
+      });
+      if (res.error) throw new Error(res.error);
+
+      const realProb = parseFloat(res.realProb);
+      document.getElementById('slider') && (document.getElementById('slider').value = Math.round(realProb));
+      renderResults(d.team1, d.team2, d.cuota, realProb, d.player);
+
+      let html = `<div class="ai-content">${res.analysis}</div>`;
+      if (res.recentForm?.length) {
+        html += `<table class="matches-table"><thead><tr><th>Partido</th><th>Resultado</th><th>Aplica</th><th>Nota</th></tr></thead><tbody>`;
+        res.recentForm.forEach(m => {
+          html += `<tr><td>${m.match}</td><td>${m.result}</td><td><span class="${m.relevant?'tag-yes':'tag-no'}">${m.relevant?'Sí':'No'}</span></td><td style="color:var(--muted);font-family:'DM Sans',sans-serif">${m.note||''}</td></tr>`;
+        });
+        html += '</tbody></table>';
+      }
+      if (res.confidence) {
+        const cc = res.confidence==='alta'?'var(--green)':res.confidence==='baja'?'var(--red)':'var(--yellow)';
+        html += `<div style="margin-top:12px;font-size:0.75rem;color:var(--muted)">Confianza: <span style="color:${cc};font-weight:600;text-transform:uppercase">${res.confidence}</span></div>`;
+      }
+      document.getElementById('aiContent').innerHTML = html;
+    } catch(e) {
+      document.getElementById('aiContent').innerHTML = `<div style="color:var(--red);font-size:0.85rem">${e.message}</div>`;
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<span class="ai-badge">★ IA</span> ANALIZAR CON INTELIGENCIA ARTIFICIAL';
+    }
+  }
+
+  async function manageSubscription() {
+    const data = await apiCall('/api/portal', 'POST');
+    if (data.url) window.location.href = data.url;
+  }
+</script>
+</body>
+</html>
